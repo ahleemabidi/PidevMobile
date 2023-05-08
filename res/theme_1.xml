@@ -2,6 +2,8 @@
 
 <resource majorVersion="1" minorVersion="11" useXmlUI="false">
     <image name="BackgroundRect.png" type="multi"  />
+    <image name="delete.jpg"  />
+    <image name="delete.png"  />
     <image name="duke.png" type="multi"  />
     <image name="gradient-overlay.png"  />
     <image name="login-background.jpg"  />

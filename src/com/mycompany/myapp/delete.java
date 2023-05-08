@@ -6,74 +6,92 @@
 package com.mycompany.myapp;
 
 import com.codename1.ui.Button;
-import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.layouts.FlowLayout;
 import com.mycompany.entities.user;
 import com.company.services.userservice;
 import java.util.ArrayList;
+import com.codename1.ui.util.Resources;
+import com.mycompany.gui.Baseform;
 
 /**
  *
  * @author asus
  */
-public class delete extends Form {
+public class delete extends Baseform {
 
-    public delete(Form previous) {
-//        super("Delete a user",new BorderLayout());
-//        Container list= new Container(BoxLayout.y());
-//        list.setScrollableY(true);
-        setTitle("Delete a user");
-        setLayout(BoxLayout.y());
+    private Resources res;
+    private ArrayList<user> users;
+    Container list;
+
+    public delete(Form previous, Resources res) {
+        super("Delete a user", new BorderLayout());
+        this.res = res;
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
+
         userservice service = userservice.getInstance();
-        ArrayList<user> users = service.getAllCategorie();
+        users = service.getAllCategorie();
+        list = new Container(BoxLayout.y());
+        list.setScrollableY(true);
+        this.add(CENTER, list);
+        showUserList();
+    }
 
+    void showUserList() {
         // Afficher les catégories
         for (user u : users) {
-            String labelText = "id: " + u.getId() + "email: " + u.getEmail() + ", nom: " + u.getNom() + ", prenom: " + u.getPrenom() + ",role" + u.getRole();
-            Label label = new Label(labelText);
-            // Créer un conteneur avec un BoxLayout horizontal
-            Container container = BoxLayout.encloseX(label);
-
-            // Créer un conteneur scrollable avec défilement horizontal
-            Container scrollContainer = new Container();
-            scrollContainer.setLayout(new BoxLayout(BoxLayout.X_AXIS));
-            scrollContainer.setScrollableX(true);
-            scrollContainer.addComponent(container);
-
-            // Ajouter le conteneur scrollable dans la Form
-            add(scrollContainer);
-
-            // Bouton de suppression pour chaque catégorie
-            Button deleteButton = new Button("Delete");
-            add(deleteButton);
-
-            // Gestionnaire d'événements pour le clic sur le bouton de suppression
-            deleteButton.addActionListener(evt -> {
+            list.add(CreateListElement(u, evt -> {
                 // Supprimer la catégorie
+                userservice service = userservice.getInstance();
                 boolean deleted = service.deleteCategorie(u.getId());
 
                 if (deleted) {
                     // Suppression réussie
                     Dialog.show("Success", "user deleted successfully", "OK", null);
-
+                    users.remove(u);
                     // Mettre à jour l'affichage en supprimant le label et le bouton de suppression
-                    removeComponent(label);
-                    removeComponent(deleteButton);
+                    list.removeAll();
+                    //list.removeComponent(listElement);
+                    //list.repaint();
+                    showUserList();
                 } else {
                     // Échec de la suppression
                     Dialog.show("Error", "Failed to delete user", "OK", null);
                 }
-            });
+            }));
         }
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
+        list.repaint();
+        list.revalidateWithAnimationSafety();
+    }
 
+    Container CreateListElement(user u, ActionListener l) {
+        Container listElement = new Container(new BorderLayout());
+
+        Label labelId = new Label("id: " + u.getId());
+        Label labelEmail = new Label("email: " + u.getEmail());
+        Label labelNom = new Label("nom: " + u.getNom());
+        Label labelPreNom = new Label("Prenom: " + u.getPrenom());
+        Label labelRole = new Label("role: " + u.getRole());
+        Container dataCont = BoxLayout.encloseY(labelId, labelEmail, labelNom, labelPreNom, labelRole);
+
+        Image delIcon = res.getImage("delete.png");
+        Button delIconLabel = new Button(delIcon, "ProfilePic");
+        // Gestionnaire d'événements pour le clic sur le bouton de suppression
+        delIconLabel.addActionListener(l);
+        Component separator = createLineSeparator(0x4bc2ff);
+
+        listElement.add(BorderLayout.EAST, (delIconLabel));
+        listElement.add(BorderLayout.CENTER, dataCont);
+        listElement.add(BorderLayout.SOUTH, separator);
+
+        return listElement;
     }
 }
