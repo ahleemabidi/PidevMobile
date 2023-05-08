@@ -216,13 +216,11 @@
         <val key="SubTitle.padUnit" value="2,2,2,2" />
         <val key="SubTitle.padding" value="1,3,1,1" />
         <val key="SubTitle.transparency" value="0" />
-        <val key="TextField.bgImage" value="text-field-underline.png" />
-        <val key="TextField.bgType" value="30" />
         <border key="TextField.border" type="empty" />
-        <val key="TextField.fgColor" value="ffffff" />
+        <val key="TextField.fgColor" value="0" />
         <font key="TextField.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="2.5" />
         <val key="TextField.padUnit" value="2,2,2,2" />
-        <val key="TextField.padding" value="1,1,1,1" />
+        <val key="TextField.padding" value="1.0,1.0,1.0,1.0" />
         <val key="TextField.sel#bgImage" value="text-field-underline.png" />
         <val key="TextField.sel#bgType" value="21" />
         <border key="TextField.sel#border" type="empty" />
@@ -230,6 +228,14 @@
         <font key="TextField.sel#font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="3.0" />
         <val key="TextField.sel#transparency" value="0" />
         <val key="TextField.transparency" value="0" />
+        <val key="TextFieldLogin.bgImage" value="text-field-underline.png" />
+        <val key="TextFieldLogin.bgType" value="30" />
+        <border key="TextFieldLogin.border" type="empty" />
+        <val key="TextFieldLogin.fgColor" value="ffffff" />
+        <font key="TextFieldLogin.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="2.5" />
+        <val key="TextFieldLogin.padUnit" value="2,2,2,2" />
+        <val key="TextFieldLogin.padding" value="1.0,1.0,1.0,1.0" />
+        <val key="TextFieldLogin.transparency" value="0" />
         <val key="Title.fgColor" value="ffffff" />
         <font key="Title.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="4.5" />
         <val key="Title.margin" value="0,0,0,0" />

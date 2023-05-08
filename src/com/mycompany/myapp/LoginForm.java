@@ -58,6 +58,8 @@ public class LoginForm extends Form {
         
         TextField login = new TextField("", "email", 20, TextField.EMAILADDR) ;
         TextField password = new TextField("", "Password", 20, TextField.PASSWORD) ;
+        login.setUIID("TextFieldLogin");
+        password.setUIID("TextFieldLogin");
         login.getAllStyles().setMargin(LEFT, 0);
         password.getAllStyles().setMargin(LEFT, 0);
         Label loginIcon = new Label("", "TextField");
