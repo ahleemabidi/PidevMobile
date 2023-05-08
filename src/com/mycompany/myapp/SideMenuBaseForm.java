@@ -30,6 +30,7 @@ import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entities.user;
 import com.mycompany.gui.ListFrontForm;
+import com.mycompany.gui.ListeEvent;
 
 
 /**
@@ -69,7 +70,7 @@ public abstract class SideMenuBaseForm extends Form {
        // getToolbar().addMaterialCommandToSideMenu("  liste users", FontImage.MATERIAL_DASHBOARD, e-> new listall(this).show());
         //getToolbar().addMaterialCommandToSideMenu("   users", FontImage.MATERIAL_TRENDING_UP,  e -> new delete(this, res).show());
         user u = new user() ; 
- // getToolbar().addMaterialCommandToSideMenu("  update users", FontImage.MATERIAL_ACCESS_TIME,  e -> new update(u,this).show());
+        getToolbar().addMaterialCommandToSideMenu("  liste event", FontImage.MATERIAL_ACCESS_TIME,   e -> new ListeEvent(res).show());
         getToolbar().addMaterialCommandToSideMenu("  liste vehicules", FontImage.MATERIAL_SETTINGS,  e-> new ListFrontForm(this).show());
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
             //getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());

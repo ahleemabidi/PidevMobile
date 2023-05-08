@@ -30,6 +30,8 @@ import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entities.user;
 import com.mycompany.gui.HomeForm;
+import com.mycompany.gui.HomeForm_event;
+
 
 
 /**
@@ -66,7 +68,7 @@ public abstract class SideMenuBaseForm1 extends Form {
         sidemenuTop.setUIID("SidemenuTop");
         
         getToolbar().addComponentToSideMenu(sidemenuTop);
-       // getToolbar().addMaterialCommandToSideMenu("  liste users", FontImage.MATERIAL_DASHBOARD, e-> new listall(this).show());
+        getToolbar().addMaterialCommandToSideMenu("  gestion event", FontImage.MATERIAL_DASHBOARD,  e -> new HomeForm_event().show());
         getToolbar().addMaterialCommandToSideMenu("   users", FontImage.MATERIAL_TRENDING_UP,  e -> new delete(this, res).show());
         user u = new user() ; 
   getToolbar().addMaterialCommandToSideMenu("  update users", FontImage.MATERIAL_ACCESS_TIME,  e -> new update(u,this).show());
