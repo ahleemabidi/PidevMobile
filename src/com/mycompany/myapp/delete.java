@@ -46,33 +46,14 @@ public class delete extends Baseform {
     }
 
     void showUserList() {
-        // Afficher les catégories
         for (user u : users) {
-            list.add(CreateListElement(u, evt -> {
-                // Supprimer la catégorie
-                userservice service = userservice.getInstance();
-                boolean deleted = service.deleteCategorie(u.getId());
-
-                if (deleted) {
-                    // Suppression réussie
-                    Dialog.show("Success", "user deleted successfully", "OK", null);
-                    users.remove(u);
-                    // Mettre à jour l'affichage en supprimant le label et le bouton de suppression
-                    list.removeAll();
-                    //list.removeComponent(listElement);
-                    //list.repaint();
-                    showUserList();
-                } else {
-                    // Échec de la suppression
-                    Dialog.show("Error", "Failed to delete user", "OK", null);
-                }
-            }));
+            list.add(CreateListElement(u));
         }
         list.repaint();
         list.revalidateWithAnimationSafety();
     }
 
-    Container CreateListElement(user u, ActionListener l) {
+    Container CreateListElement(user u) {
         Container listElement = new Container(new BorderLayout());
 
         Label labelId = new Label("id: " + u.getId());
@@ -85,7 +66,24 @@ public class delete extends Baseform {
         Image delIcon = res.getImage("delete.png");
         Button delIconLabel = new Button(delIcon, "ProfilePic");
         // Gestionnaire d'événements pour le clic sur le bouton de suppression
-        delIconLabel.addActionListener(l);
+        delIconLabel.addActionListener(evt -> {
+            // Supprimer la catégorie
+            userservice service = userservice.getInstance();
+            boolean deleted = service.deleteCategorie(u.getId());
+
+            if (deleted) {
+                // Suppression réussie
+                Dialog.show("Success", "user deleted successfully", "OK", null);
+                users.remove(u);
+                // Mettre à jour l'affichage en supprimant le label et le bouton de suppression
+                list.removeComponent(listElement);
+                list.repaint();
+                list.revalidateWithAnimationSafety();
+            } else {
+                // Échec de la suppression
+                Dialog.show("Error", "Failed to delete user", "OK", null);
+            }
+        });
         Component separator = createLineSeparator(0x4bc2ff);
 
         listElement.add(BorderLayout.EAST, (delIconLabel));
