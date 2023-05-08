@@ -41,7 +41,7 @@ import com.company.services.userservice;
  *
  * @author Shai Almog
  */
-public class ProfileForm1 extends SideMenuBaseForm {
+public class ProfileForm1 extends SideMenuBaseForm1 {
     public ProfileForm1(Resources res) {
         super(BoxLayout.y());
         Toolbar tb = getToolbar();
@@ -70,7 +70,7 @@ public class ProfileForm1 extends SideMenuBaseForm {
                         FlowLayout.encloseIn(menuButton),
                         BorderLayout.centerAbsolute(
                                 BoxLayout.encloseY(
-                                    new Label("User", "Title"),
+                                    new Label("Admin", "Title"),
                                     new Label("UI/UX ", "SubTitle")
                                 )
                             ).add(BorderLayout.WEST, profilePicLabel),

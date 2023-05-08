@@ -87,14 +87,14 @@ public class ProfileForm extends SideMenuBaseForm {
         setupSideMenu(res);
            //Button createNewAccount = new Button("CREATE NEW ACCOUNT");
            //titleCmp.add(createNewAccount);
-fab.addActionListener(evt -> {
-    create ajout = new create();
-    ajout.showRegistrationForm();
-
-
-//createNewAccount.setUIID("CreateNewAccountButton");
-        
-});
+//fab.addActionListener(evt -> {
+//    create ajout = new create();
+//    ajout.showRegistrationForm();
+//
+//
+////createNewAccount.setUIID("CreateNewAccountButton");
+//        
+//});
     }
     
     private void addButtonBottom(Image arrowDown, String text, int color, boolean first) {

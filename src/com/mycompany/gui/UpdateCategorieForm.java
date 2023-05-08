@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp;
+package com.mycompany.gui;
 
 import com.codename1.ui.Button;
-import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
-import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
@@ -17,27 +15,25 @@ import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.layouts.FlowLayout;
-import com.mycompany.entities.user;
-import com.company.services.userservice;
+import com.mycompany.entities.Categorie;
+import com.company.services.ServiceCategorie;
 import java.util.ArrayList;
 
 /**
  *
  * @author asus
  */
-public class update extends Form{
-       public update(user c, Form previous) {
+public class UpdateCategorieForm extends Form{
+       public UpdateCategorieForm(Categorie c, Form previous) {
           setTitle("Update a categorie");
         setLayout(BoxLayout.y());
-    userservice service = userservice.getInstance();
-    ArrayList<user> categories = service.getAllCategorie();
+    ServiceCategorie service = ServiceCategorie.getInstance();
+    ArrayList<Categorie> categories = service.getAllCategorie();
 
 
-    for (user u : categories) {
-     String labelText = "id: " + u.getId()+"email: " + u.getEmail() + ", nom: " + u.getNom() + ", prenom: " + u.getPrenom()+ ", role: " + u.getRole();
+    for (Categorie categorie : categories) {
+     String labelText = "idCategorie: " + categorie.getId_categorie()+"Type: " + categorie.getType() + ", Matricule: " + categorie.getMatricule() + ", Marque: " + categorie.getMarque();
         Label label = new Label(labelText);
         // Créer un conteneur avec un BoxLayout horizontal
         Container container = BoxLayout.encloseX(label);
@@ -56,29 +52,42 @@ public class update extends Form{
     add(updateButton);
     
 
-    final user currentCategorie = u; // Variable locale finale pour stocker la référence à la catégorie
+    final Categorie currentCategorie = categorie; // Variable locale finale pour stocker la référence à la catégorie
 
     // Gestionnaire d'événements pour le clic sur le bouton "Update"
     updateButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
             // Créer le formulaire de mise à jour de la catégorie
-            Form updateForm = new Form("Update user", BoxLayout.y());
+            Form updateForm = new Form("Update Category", BoxLayout.y());
 
-            TextField email = new TextField(currentCategorie.getEmail(), "email");
-            TextField prenom = new TextField(currentCategorie.getPrenom(), "prenom");
-            TextField nom = new TextField(currentCategorie.getNom(), "nom");
-
-            
+            TextField type = new TextField(currentCategorie.getType(), "Type");
+            TextField matricule = new TextField(currentCategorie.getMatricule(), "Matricule");
+            TextField marque = new TextField(currentCategorie.getMarque(), "Marque");
 
             Button btnSave = new Button("Save");
             btnSave.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                    if (email.getText().isEmpty() || prenom.getText().isEmpty() || nom.getText().isEmpty()) {
-                        Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
+                    if (type.getText().isEmpty() || matricule.getText().isEmpty() || marque.getText().isEmpty()) {
+                        Dialog.show("Alert", "Please fill all the fields", new Command("OK"));     
+                } else if  (!type.getText().equals("moyenne") && !type.getText().equals("haute")) {
+                    Dialog.show("Error", "Invalid Type value. Valid values are 'moyenne' or 'haute'", new Command("OK"));
+                } else  {
+                    String matriculeT = matricule.getText();
+
+                    if (matriculeT.length() != 10) {
+                        Dialog.show("Error", "Invalid Matricule value. Valid format is '123Tun4567'", new Command("OK"));
                     } else {
-                        if (service.updateCategorie(email.getText(), prenom.getText(), nom.getText(), currentCategorie.getId())) {
+                        String pays = matriculeT.substring(3, 6);
+                        if (!pays.equals("Tun")) {
+                            Dialog.show("Error", "Invalid Matricule value. Valid format is '123Tun4567'", new Command("OK"));
+                        } else {
+                      // Afficher une boîte de dialogue de confirmation
+            boolean confirmed = Dialog.show("Confirmation", "Are you sure you want to save the changes?", "Yes", "No");
+
+            if (confirmed) {
+                        if (service.updateCategorie(type.getText(), matricule.getText(), marque.getText(), currentCategorie.getId_categorie())) {
                             Dialog.show("Success", "Categorie updated", new Command("OK"));
                                             showUpdatedCategoriesList(previous);
                         } else {
@@ -86,24 +95,24 @@ public class update extends Form{
                         }
                     }
                 }
-            });
-               updateForm.addAll(email, nom, prenom, btnSave);
+                    }} }});
+               updateForm.addAll(type, matricule, marque, btnSave);
             updateForm.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
             updateForm.show();
         }
     });
 }}
  private void showUpdatedCategoriesList(Form previous) {
-    Form updatedListForm = new Form("Updated ", BoxLayout.y());
-        userservice service = userservice.getInstance();
+    Form updatedListForm = new Form("Updated Categories", BoxLayout.y());
+        ServiceCategorie service = ServiceCategorie.getInstance();
 
     // Charger les catégories mises à jour
-    ArrayList<user> updatedCategories = service.getAllCategorie();
+    ArrayList<Categorie> updatedCategories = service.getAllCategorie();
     
     // Afficher les catégories dans le formulaire
-    for (user u : updatedCategories) {
+    for (Categorie updatedCategorie : updatedCategories) {
         // Créer le texte de l'étiquette
-        String labelText = "id: " + u.getId() + "email: " + u.getEmail() + ", nom: " + u.getNom() + ", prenom: " + u.getPrenom();
+        String labelText = "idCategorie: " + updatedCategorie.getId_categorie() + "Type: " + updatedCategorie.getType() + ", Matricule: " + updatedCategorie.getMatricule() + ", Marque: " + updatedCategorie.getMarque();
         Label label = new Label(labelText);
         // Créer un conteneur avec un BoxLayout horizontal
         Container container = BoxLayout.encloseX(label);
@@ -125,3 +134,7 @@ public class update extends Form{
     
     updatedListForm.show();
 }}
+
+
+
+

@@ -75,7 +75,11 @@ public class LoginForm extends Form {
            userservice.getInstance().signIn(login, password);
            new ProfileForm(theme).show() ; 
         });
-        
+       Button adminButton = new Button("ADMIN");
+adminButton.setUIID("LoginButton");
+adminButton.addActionListener(e -> {
+   new ProfileForm1(theme).show() ; 
+});
         
         
        Button createNewAccount = new Button("CREATE NEW ACCOUNT");
@@ -83,8 +87,11 @@ createNewAccount.addActionListener(evt -> {
     create ajout = new create();
     ajout.showRegistrationForm();
 });
+  
 
 createNewAccount.setUIID("CreateNewAccountButton");
+
+
         
         // We remove the extra space for low resolution devices so things fit better
         Label spaceLabel;
@@ -104,7 +111,9 @@ createNewAccount.setUIID("CreateNewAccountButton");
                 BorderLayout.center(password).
                         add(BorderLayout.WEST, passwordIcon),
                 loginButton,
+                 adminButton,
                 createNewAccount
+                
         );
         add(BorderLayout.CENTER, by);
         
