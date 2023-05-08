@@ -31,6 +31,8 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.entities.user;
 import com.mycompany.gui.HomeForm;
 import com.mycompany.gui.HomeForm_event;
+import com.mycompany.gui.HomeForm_res;
+
 
 
 
@@ -73,8 +75,8 @@ public abstract class SideMenuBaseForm1 extends Form {
         user u = new user() ; 
   getToolbar().addMaterialCommandToSideMenu("  update users", FontImage.MATERIAL_ACCESS_TIME,  e -> new update(u,this).show());
        getToolbar().addMaterialCommandToSideMenu("  gestion vehicules", FontImage.MATERIAL_SETTINGS,  e -> new HomeForm().show());
-        getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
-            //getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
+        getToolbar().addMaterialCommandToSideMenu("  gestion reservations", FontImage.MATERIAL_EXIT_TO_APP,  e -> new HomeForm_res().show());
+         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
       //  getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
 
     
