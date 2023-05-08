@@ -65,12 +65,16 @@ public abstract class SideMenuBaseForm extends Form {
         sidemenuTop.setUIID("SidemenuTop");
         
         getToolbar().addComponentToSideMenu(sidemenuTop);
-        getToolbar().addMaterialCommandToSideMenu("  liste users", FontImage.MATERIAL_DASHBOARD, e-> new listall(this).show());
-        getToolbar().addMaterialCommandToSideMenu("  delete users", FontImage.MATERIAL_TRENDING_UP,  e -> new delete(this, res).show());
+       // getToolbar().addMaterialCommandToSideMenu("  liste users", FontImage.MATERIAL_DASHBOARD, e-> new listall(this).show());
+        getToolbar().addMaterialCommandToSideMenu("   users", FontImage.MATERIAL_TRENDING_UP,  e -> new delete(this, res).show());
         user u = new user() ; 
   getToolbar().addMaterialCommandToSideMenu("  update users", FontImage.MATERIAL_ACCESS_TIME,  e -> new update(u,this).show());
-        getToolbar().addMaterialCommandToSideMenu("  Account Settings", FontImage.MATERIAL_SETTINGS,  e -> showOtherForm(res));
+      //  getToolbar().addMaterialCommandToSideMenu("  Account Settings", FontImage.MATERIAL_SETTINGS,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
+            getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
+        getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
+
+    
     }
     
     protected abstract void showOtherForm(Resources res);
