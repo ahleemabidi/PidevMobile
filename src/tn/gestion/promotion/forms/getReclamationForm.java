@@ -33,7 +33,7 @@ public class getReclamationForm extends BaseForm {
     public getReclamationForm() {
         this.init(Resources.getGlobalResources());
 
-        Button sortButton = new Button("Sort by Cin");
+        Button sortButton = new Button("sort");
         sortButton.addActionListener(e -> {
             Collections.sort(reclamations, new Comparator<Reclamation>() {
                 @Override
