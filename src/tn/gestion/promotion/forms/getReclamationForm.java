@@ -5,6 +5,7 @@ import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.TextField;
 import com.codename1.ui.list.MultiList;
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
+import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import tn.gestion.promotion.enitite.Reclamation;
@@ -102,15 +105,34 @@ public class getReclamationForm extends BaseForm {
         addComponent(searchContainer);
     }
 
-    private void updateList() {
-        DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) eventList.getModel();
-        model.removeAll();
-        for (Reclamation c : reclamations) {
-            Map<String, Object> item = new HashMap<>();
-            item.put("Line1", "Nom : " + c.getType());
-            item.put("Line2", "Type : " + c.getCin());
-            item.put("Line3", c.getId());
-            model.addItem(item);
-        }
+private void updateList() {
+    DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) eventList.getModel();
+    model.removeAll();
+    for (Reclamation c : reclamations) {
+        Map<String, Object> item = new HashMap<>();
+        item.put("Line1", "Nom : " + c.getType());
+        item.put("Line2", "Type : " + c.getCin());
+        item.put("Line3", c.getId());
+
+        // Add button to generate PDF
+        Button Fact = new Button("Detail");
+        Fact.setIcon(FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT, Fact.getUnselectedStyle()));
+        Fact.addActionListener((evv) -> {
+            if (Dialog.show("Confirmation", "Voulez-vous obtenir detail de l'evenement en forme pdf  ?", "Oui", "Non")) {
+                try {
+                    ReclamationWebService.getInstance().recupererpdf(c);
+                } catch (DocumentException ex) {
+                    // Logger.getLogger(AfficherLivraison.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    // Logger.getLogger(AfficherLivraison.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Dialog.show("PDF", "Enregistré avec succés", "", "OK");
+            }
+        });
+        add(Fact);
+
+        model.addItem(item);
     }
+}
+
 }
