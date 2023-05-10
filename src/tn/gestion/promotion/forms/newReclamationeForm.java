@@ -51,6 +51,7 @@ public class newReclamationeForm extends BaseForm {
 
                 ReclamationWebService service = new ReclamationWebService();
                 service.newReclamation(newReclamation);
+                Dialog.show("Success", "Votre réclamation a été ajoutée avec succès.", "OK", null);
             }
         });
 

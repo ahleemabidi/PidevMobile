@@ -8,6 +8,7 @@
     <project name="AnasHammou" default="default" basedir=".">
     <description>Builds, tests, and runs the project AnasHammou.</description>
     <import file="nbproject/build-impl.xml"/>
+    
     <property file="codenameone_settings.properties"/>
     <property name="automated" value="false" />
     <taskdef name="codeNameOne" classname="com.codename1.build.client.CodeNameOneBuildTask" classpath="CodeNameOneBuildClient.jar"/>
@@ -631,6 +632,8 @@
     </target>
 
     <target name="pre-javadoc">
+
+
         <property value="JavaSE.jar:lib/CLDC11.jar:lib/lib/impl/cls" name="javac.classpath"/>        
     </target>
     <target depends="pre-javadoc,init,-javadoc-build,-javadoc-browse" description="Build Javadoc." name="javadoc"/>
